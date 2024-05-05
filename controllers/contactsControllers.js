@@ -4,6 +4,7 @@ import {
 	getContactById,
 	removeContact,
 	addContact,
+	updateById,
 } from '../services/contactsServices.js';
 
 export const getAllContacts = async (req, res, next) => {
@@ -27,8 +28,40 @@ export const getOneContact = async (req, res, next) => {
 	}
 };
 
-export const deleteContact = (req, res) => {};
+export const deleteContact = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const result = await removeContact(id);
+		if (!result) {
+			throw HttpError(404);
+		}
+		res.json({
+			message: 'Delete success',
+		});
+	} catch (error) {
+		next(HttpError(500));
+	}
+};
 
-export const createContact = (req, res) => {};
+export const createContact = async (req, res, next) => {
+	try {
+		const { name, email, phone } = req.body;
+		const newContact = await addContact(name, email, phone);
+		res.status(201).json(newContact);
+	} catch (error) {
+		next(HttpError(500));
+	}
+};
 
-export const updateContact = (req, res) => {};
+export const updateContact = async (req, res, next) => {
+	try {
+		const { id } = req.params;
+		const updatedContact = await updateById(id, req.body);
+		if (!updatedContact) {
+			throw HttpError(404);
+		}
+		res.json(updatedContact);
+	} catch (error) {
+		next(HttpError(500));
+	}
+};
