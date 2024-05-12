@@ -27,19 +27,14 @@ async function getContactById(contactId) {
 
 async function removeContact(contactId) {
 	const contacts = await listContacts();
-
 	const contactInd = contacts.findIndex((contact) => contact.id === contactId);
-
+	
 	if (contactInd === -1) {
 		return null;
 	}
-
 	const removedContact = contacts[contactInd];
-
 	contacts.splice(contactInd, 1);
-
 	await writeContacts(contacts);
-
 	return removedContact;
 }
 
@@ -70,10 +65,4 @@ const updateById = async (id, data) => {
 	return contacts[index];
 };
 
-export {
-	listContacts,
-	getContactById,
-	removeContact,
-	addContact,
-	updateById,
-};
+export { listContacts, getContactById, removeContact, addContact, updateById };
