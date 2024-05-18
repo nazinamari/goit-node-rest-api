@@ -41,14 +41,8 @@ export const deleteContact = async (req, res, next) => {
 };
 
 export const createContact = async (req, res, next) => {
-	const contact = {
-		name: req.body.name,
-		email: req.body.email,
-		phone: req.body.phone,
-	};
-
 	try {
-		const result = await Contact.create(contact);
+		const result = await Contact.create(req.body);
 		res.status(201).json(result);
 	} catch (error) {
 		next(error);
@@ -60,7 +54,7 @@ export const updateContact = async (req, res, next) => {
 
 	try {
 		const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
-		if (!result) {
+		if (result === null) {
 			throw HttpError(404, 'Contact not found');
 		}
 		res.json(result);
@@ -71,12 +65,9 @@ export const updateContact = async (req, res, next) => {
 
 export const updateFavoriteContact = async (req, res, next) => {
 	const { id } = req.params;
-	const contact = {
-		favorite: req.body.favorite,
-	};
 	try {
-		const result = await Contact.findByIdAndUpdate(id, contact, { new: true });
-		if (!result) throw HttpError(404, 'Contact not found');
+		const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
+		if (result === null) throw HttpError(404, 'Contact not found');
 
 		res.status(200).send(result);
 	} catch (error) {
