@@ -1,4 +1,4 @@
-import User from '../models/user.js';
+import User from '../models/users.js';
 import bcrypt from 'bcrypt';
 
 async function register(req, res, next) {
@@ -27,6 +27,11 @@ async function register(req, res, next) {
 	}
 }
 
+async function login(req, res, next) {
+	res.send('Login');
+}
+
 export default {
 	register,
+	login,
 };
