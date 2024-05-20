@@ -4,7 +4,12 @@ import HttpError from '../helpers/HttpError.js';
 export const getAllContacts = async (req, res, next) => {
 	console.log({ user: req.user });
 	try {
-		const contacts = await Contact.find({ owner: req.user.id });
+		const favorite = req.query.favorite;
+
+		const contacts = await Contact.find({
+			owner: req.user.id,
+			favorite: favorite,
+		});
 		res.send(contacts);
 	} catch (error) {
 		next(error);
