@@ -62,7 +62,18 @@ async function login(req, res, next) {
 	}
 }
 
+async function logout(req, res, next) {
+	try {
+		await User.findByIdAndUpdate(req.user.id, { token: null });
+		res.status(204).end();
+		console.log('logout');
+	} catch (error) {
+		next(error);
+	}
+}
+
 export default {
 	register,
 	login,
+	logout,
 };

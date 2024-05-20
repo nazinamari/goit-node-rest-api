@@ -1,5 +1,7 @@
 import jwt, { decode } from 'jsonwebtoken';
 
+import User from '../models/users.js';
+
 function auth(req, res, next) {
 	const authorizationHeader = req.headers.authorization;
 	console.log({ authorizationHeader });
@@ -20,25 +22,29 @@ function auth(req, res, next) {
 		if (err) {
 			return res.status(401).send({ message: 'Invalid token' });
 		}
-		// try {
-		// 	const user = await User.findById(decode.id);
 
-		// 	if (user === null) {
-		// 		return res.status(401).send({ message: 'Invalid token' });
-		// 	}
+		try {
+			const user = await User.findById(decode.id);
 
-		// 	if (user.token !== token) {
-		// 		return res.status(401).send({ message: 'Invalid token' });
-		// 	}
+			if (user === null) {
+				return res.status(401).send({ message: 'Invalid token' });
+			}
 
-		console.log({ decode });
+			if (user.token !== token) {
+				return res.status(401).send({ message: 'Invalid token' });
+			}
 
-		req.user = {
-			id: decode.id,
-			name: decode.name,
-		};
+			console.log({ decode });
 
-		next();
+			req.user = {
+				id: user._id,
+				name: user.name,
+			};
+
+			next();
+		} catch (error) {
+			next(error);
+		}
 	});
 }
 
