@@ -14,17 +14,6 @@ export const getAllContacts = async (req, res, next) => {
 export const getOneContact = async (req, res, next) => {
 	const { id } = req.params;
 	try {
-		// const contact = await Contact.findById(id);
-
-		// if (contact === null) {
-		// 	throw HttpError(404, 'Contact not found');
-		// }
-
-		// if (contact.owner.toString() !== req.user.id) {
-		// 	// return res.status(403).send({ message: 'Book is forbidden' });
-		// 	throw HttpError(404, 'Contact not found');
-		// }
-
 		const contact = await Contact.findOne({ _id: id, owner: req.user.id });
 
 		if (contact === null) {
