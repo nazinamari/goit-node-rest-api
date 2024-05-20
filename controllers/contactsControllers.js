@@ -29,7 +29,10 @@ export const getOneContact = async (req, res, next) => {
 export const deleteContact = async (req, res, next) => {
 	const { id } = req.params;
 	try {
-		const result = await Contact.findByIdAndDelete(id);
+		const result = await Contact.findByIdAndDelete({
+			_id: id,
+			owner: req.user.id,
+		});
 
 		if (result === null) {
 			throw HttpError(404, 'Contact not found');
@@ -50,6 +53,7 @@ export const createContact = async (req, res, next) => {
 			phone,
 			owner: req.user.id,
 		};
+
 		const result = await Contact.create(contact);
 		res.status(201).json(result);
 	} catch (error) {
@@ -61,10 +65,11 @@ export const updateContact = async (req, res, next) => {
 	const { id } = req.params;
 
 	try {
-		const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
-		if (result === null) {
-			throw HttpError(404, 'Contact not found');
-		}
+		const result = await Contact.findByIdAndUpdate(
+			{ _id: id, owner: req.user.id },
+			req.body,
+			{ new: true }
+		);
 		res.json(result);
 	} catch (error) {
 		next(error);
@@ -74,7 +79,12 @@ export const updateContact = async (req, res, next) => {
 export const updateFavoriteContact = async (req, res, next) => {
 	const { id } = req.params;
 	try {
-		const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
+		const result = await Contact.findByIdAndUpdate(
+			{ _id: id, owner: req.user.id },
+			req.body,
+			{ new: true }
+		);
+
 		if (result === null) throw HttpError(404, 'Contact not found');
 
 		res.status(200).send(result);

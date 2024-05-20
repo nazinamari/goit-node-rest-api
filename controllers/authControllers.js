@@ -72,8 +72,36 @@ async function logout(req, res, next) {
 	}
 }
 
+async function current(req, res, next) {
+	try {
+		const user = await User.findById(req.user.id);
+		res.status(200).json({
+			email: user.email,
+			subscription: user.subscription,
+		});
+	} catch (error) {
+		next(error);
+	}
+}
+
+async function updSubscription(req, res, next) {
+	try {
+		const user = await User.findByIdAndUpdate(req.user.id, req.body, {
+			new: true,
+		});
+		res.status(200).json({
+			email: user.email,
+			subscription: user.subscription,
+		});
+	} catch (error) {
+		next(error);
+	}
+}
+
 export default {
 	register,
 	login,
 	logout,
+	current,
+	updSubscription,
 };
