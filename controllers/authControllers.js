@@ -2,7 +2,7 @@ import User from '../models/users.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-async function register(req, res, next) {
+export const register = async (req, res, next) => {
 	const { name, email, password } = req.body;
 
 	const emailInLowerCase = email.toLowerCase();
@@ -22,13 +22,21 @@ async function register(req, res, next) {
 			password: passwordHash,
 		});
 
-		res.status(201).send({ message: 'Registration successfully' });
+		res
+			.status(201)
+			.json({
+				user: {
+					email: user.email,
+					subscription: user.subscription,
+				},
+			})
+			.send({ message: 'Registration successfully' });
 	} catch (error) {
 		next(error);
 	}
-}
+};
 
-async function login(req, res, next) {
+export const login = async (req, res, next) => {
 	const { email, password } = req.body;
 
 	const emailInLowerCase = email.toLowerCase();
@@ -56,13 +64,19 @@ async function login(req, res, next) {
 
 		await User.findByIdAndUpdate(user._id, { token });
 
-		res.send({ token });
+		res.status(200).json({
+			token,
+			user: {
+				email: user.email,
+				subscription: user.subscription,
+			},
+		});
 	} catch (error) {
 		next(error);
 	}
-}
+};
 
-async function logout(req, res, next) {
+export const logout = async (req, res, next) => {
 	try {
 		await User.findByIdAndUpdate(req.user.id, { token: null });
 		res.status(204).end();
@@ -70,9 +84,9 @@ async function logout(req, res, next) {
 	} catch (error) {
 		next(error);
 	}
-}
+};
 
-async function current(req, res, next) {
+export const current = async (req, res, next) => {
 	try {
 		const user = await User.findById(req.user.id);
 		res.status(200).json({
@@ -82,9 +96,9 @@ async function current(req, res, next) {
 	} catch (error) {
 		next(error);
 	}
-}
+};
 
-async function updSubscription(req, res, next) {
+export const updSubscription = async (req, res, next) => {
 	try {
 		const user = await User.findByIdAndUpdate(req.user.id, req.body, {
 			new: true,
@@ -96,12 +110,4 @@ async function updSubscription(req, res, next) {
 	} catch (error) {
 		next(error);
 	}
-}
-
-export default {
-	register,
-	login,
-	logout,
-	current,
-	updSubscription,
 };
