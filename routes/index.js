@@ -3,7 +3,7 @@ import express from 'express';
 import authRoutes from './authRouter.js';
 import contactsRoutes from './contactsRouter.js';
 
-import authMiddleware from '../middleware/auth.js';
+import authMiddleware from '../helpers/auth.js';
 
 const router = express.Router();
 
