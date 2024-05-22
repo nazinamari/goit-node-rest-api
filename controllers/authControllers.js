@@ -22,15 +22,12 @@ export const register = async (req, res, next) => {
 			password: passwordHash,
 		});
 
-		res
-			.status(201)
-			.json({
-				user: {
-					email: user.email,
-					subscription: user.subscription,
-				},
-			})
-			.send({ message: 'Registration successfully' });
+		res.status(201).json({
+			user: {
+				email: user.email,
+				subscription: user.subscription,
+			},
+		});
 	} catch (error) {
 		next(error);
 	}
