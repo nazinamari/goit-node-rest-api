@@ -60,7 +60,7 @@ export const createContact = async (req, res, next) => {
 		};
 
 		const result = await Contact.create(contact);
-		res.status(201).json(result);
+		res.status(201).send(result);
 	} catch (error) {
 		next(error);
 	}
@@ -76,8 +76,8 @@ export const updateContact = async (req, res, next) => {
 			{ new: true }
 		);
 
-		if (full === null) throw HttpError(404, 'Contact not found');
-		res.json(result);
+		if (result === null) throw HttpError(404, 'Contact not found');
+		res.send(result);
 	} catch (error) {
 		next(error);
 	}
