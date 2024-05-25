@@ -8,8 +8,12 @@ const storage = multer.diskStorage({
 		cb(null, path.resolve('tmp'));
 	},
 	filename(req, file, cb) {
-		console.log({ file });
-		cb(null, file.originalname);
+		const extname = path.extname(file.originalname); // .jpg розширення
+		const basename = path.basename(file.originalname, extname); // file name
+		const suffix = crypto.randomUUID();
+
+		console.log(`${basename}-${suffix}${extname}`);
+		cb(null, `${basename}-${suffix}${extname}`);
 	},
 });
 
