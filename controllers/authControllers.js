@@ -24,7 +24,6 @@ export const register = async (req, res, next) => {
 
 		res.status(201).json({
 			user: {
-				name: newUser.name,
 				email: newUser.email,
 				subscription: newUser.subscription,
 			},

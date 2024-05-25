@@ -3,3 +3,6 @@ node_modules/
 .idea
 .vscode
 .DS_Store
+tmp/*
+public/avatars*
+!public/avatars/.gitkeep
