@@ -26,3 +26,21 @@ export const uploadAvatar = async (req, res, next) => {
 		next(error);
 	}
 };
+
+export const getAvatar = async (req, res, next) => {
+	try {
+		const user = await User.findById(req.user.id);
+
+		if (user === null) {
+			throw HttpError(404, 'User not found');
+		}
+
+		if (user.avatar === null) {
+			return res.status(404).send({ message: 'Avatar not found' });
+		}
+
+		res.sendFile(path.resolve('public/avatars', user.avatar));
+	} catch (error) {
+		next(error);
+	}
+};

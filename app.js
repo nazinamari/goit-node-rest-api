@@ -1,9 +1,9 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-// import 'dotenv/config';
 import './db.js';
 import routes from './routes/index.js';
+import path from 'node:path';
 
 const PORT = 3000;
 
@@ -13,10 +13,14 @@ app.use(morgan('tiny'));
 app.use(cors());
 app.use(express.json());
 
+app.use('/avatars', express.static(path.resolve('public/avatars')));
+
 app.use('/api', routes);
 
 // Handle 404 Error
-app.use((_, res) => {
+app.use((req, res, next) => {
+	console.log(req.url);
+	console.log(req.method);
 	res.status(404).json({ message: 'Route not found' });
 });
 
