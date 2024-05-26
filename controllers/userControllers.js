@@ -1,15 +1,19 @@
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import HttpError from '../helpers/HttpError.js';
+import Jimp from 'jimp';
 
 import User from '../models/users.js';
 
 export const uploadAvatar = async (req, res, next) => {
 	try {
-		await fs.rename(
-			req.file.path,
-			path.resolve('public/avatars', req.file.filename)
-		);
+		const tempPath = req.file.path;
+		const finalPath = path.resolve('public/avatars', req.file.filename);
+
+		await fs.rename(tempPath, finalPath);
+
+		const avatar = await Jimp.read(finalPath);
+		await avatar.resize(250, 250).writeAsync(finalPath);
 
 		const newUser = await User.findByIdAndUpdate(
 			req.user.id,
