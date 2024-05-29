@@ -32,7 +32,7 @@ export const uploadAvatar = async (req, res, next) => {
 			throw HttpError(404, 'User not found');
 		}
 
-		res.send(newUser);
+		res.send({ avatarURL });
 	} catch (error) {
 		next(error);
 	}
