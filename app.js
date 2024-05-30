@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 // app.use('/avatars', express.static(path.resolve('public/avatars')));
-app.use('/public', express.static(path.resolve('/public')));
+app.use('/public', express.static(path.resolve('public')));
 
 app.use('/api', routes);
 
