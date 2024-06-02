@@ -3,7 +3,9 @@ import sgMail from '@sendgrid/mail';
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-async function sendMail(message) {
+const { EMAIL_FROM, BASE_URL } = process.env;
+
+const sendMail = async (message) => {
 	try {
 		await sgMail.send(message);
 		console.log('Email sent successfully');
@@ -11,18 +13,18 @@ async function sendMail(message) {
 		console.error('Error sending email:', error);
 		throw error;
 	}
-}
+};
 
-export default { sendMail };
+export const sendVerifEmail = async (email, verificationToken) => {
+	const emailInLowerCase = email.toLowerCase();
+	const mailOptions = {
+		to: emailInLowerCase,
+		from: EMAIL_FROM,
+		subject: 'Welcome to Contact Book!',
+		html: `To confirm your email please follow the <a href="${BASE_URL}/api/users/verify/${verificationToken}">link</a>`,
+		text: `To confirm your email please open the link ${BASE_URL}/api/users/verify/${verificationToken}`,
+	};
+	await sendMail(mailOptions);
+};
 
-// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
-// const message = {
-// 	to: 'nzyame@gmail.com',
-// 	from: 'nzyame@gmail.com',
-// 	subject: 'Hello from Node.js',
-// 	html: `<h1 style="color: red">Node.js is awesome platform!</h1>`,
-// 	text: `Node.js is awesome platform!`,
-// };
-
-// sgMail.send(message).then(console.log).catch(console.error);
+export default { sendMail, sendVerifEmail };
