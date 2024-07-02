@@ -1,0 +1,24 @@
+type: object
+required:
+  - name
+  - email
+  - password
+  - avatarURL
+  - verificationToken
+properties:
+  name:
+    description: "User's name"
+    type: string
+    example: 'John Doe'
+  email:
+    description: "Users's email"
+    type: string
+    example: 'nzyame@gmail.com'
+  password:
+    description: "User's password"
+    type: string
+    example: 'SolidColor'
+  avatarURL:
+    description: "Link to User's avatar"
+    type: string
+    example: <https://res.cloudinary.com/uqwgdu/image/upload/image.png>

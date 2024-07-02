@@ -4,6 +4,9 @@
 	"scripts": {
 		"start": "node ./app.js",
 		"dev": "nodemon ./app.js",
+		"preview-docs": "redocly preview-docs",
+		"build": "npm run build-docs",
+		"build-docs": "redocly bundle --ext json -o docs/swagger.json",
 		"test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
 	},
 	"dependencies": {
@@ -23,6 +26,7 @@
 		"path": "^0.12.7"
 	},
 	"devDependencies": {
+		"@redocly/cli": "^1.17.0",
 		"@types/gravatar": "^1.8.6",
 		"@types/jest": "^29.5.12",
 		"jest": "^29.7.0",
