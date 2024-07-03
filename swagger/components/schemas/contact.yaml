@@ -26,6 +26,6 @@ properties:
     type: boolean
     example: false
   owner:
-    description: "Contact's user id"
+    description: "Contact's User id"
     type: string
     example: 65e4decdd286b30065d54af9
