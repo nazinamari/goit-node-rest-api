@@ -1,12 +1,19 @@
 tags:
   - Contacts
-summary: Create a new contact
-operationId: createContact
-description: 'Create a new contact with this endpoint'
+summary: Update a contact
+operationId: updateContact
+description: 'Update a contact by its ID'
 security:
   - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+    description: The ID of the contact to update
 requestBody:
-  description: Contact object that needs to be added to the contact book
+  description: Contact object that needs to be updated
   required: true
   content:
     application/json:
@@ -33,26 +40,15 @@ requestBody:
             description: Whether the contact is marked as favorite
             example: false
 responses:
-  '201':
-    description: Successfully created contact!
+  '200':
+    description: Successfully updated contact
     content:
       application/json:
         schema:
-          type: object
-          required:
-            - status
-            - message
-            - data
-          properties:
-            status:
-              type: integer
-              example: 201
-            message:
-              type: string
-              example: Successfully created contact!
-            data:
-              $ref: '../../components/schemas/contact.yaml'
+          $ref: '../../../../components/schemas/contact.yaml'
   '400':
-    $ref: ../../components/responses/400.yaml
+    $ref: '../../../../components/responses/400.yaml'
   '401':
-    $ref: ../../components/responses/401.yaml
+    $ref: '../../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../../components/responses/404.yaml'

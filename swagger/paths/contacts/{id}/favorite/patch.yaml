@@ -1,0 +1,39 @@
+tags:
+  - Contacts
+summary: Update the favorite status of a contact
+operationId: updateFavoriteContact
+description: 'Update the favorite status of a contact by its Id'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+    description: The Id of the contact to update
+requestBody:
+  description: Update favorite status of the contact
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          favorite:
+            type: boolean
+            description: Whether the contact is marked as favorite
+            example: true
+responses:
+  '200':
+    description: Successfully updated favorite status
+    content:
+      application/json:
+        schema:
+          $ref: ../../../../components/schemas/contact.yaml
+  '400':
+    $ref: ../../../../components/responses/400.yaml
+  '401':
+    $ref: ../../../../components/responses/401.yaml
+  '404':
+    $ref: ../../../../components/responses/404.yaml
