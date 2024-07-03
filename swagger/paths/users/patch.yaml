@@ -1,14 +1,15 @@
 summary: Update user's avatar
+operationId: UpdateAvatar
 tags:
   - Users
-parameters:
-  - in: formData
-    name: avatar
-    required: true
-    description: The avatar image file to upload
-    schema:
-      type: string
-      format: binary
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: string
+        format: binary
 responses:
   '200':
     description: Successfully updated user's avatar
@@ -20,7 +21,7 @@ responses:
             avatarURL:
               type: string
               format: uri
-              example: /avatars/avatar123.jpg
+              example: /avatar/avatar123.jpg
   '400':
     $ref: ../../components/responses/400.yaml
   '401':

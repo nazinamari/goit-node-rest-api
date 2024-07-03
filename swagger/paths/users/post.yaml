@@ -1,0 +1,27 @@
+summary: Resend verification email
+operationId: resendVarification
+tags:
+  - Users
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: email
+    required: true
+    description: The email address of the user to resend verification
+    schema:
+      type: string
+      format: email
+responses:
+  '200':
+    description: Verification email sent
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: Verification email sent
+  '400':
+    $ref: ../../components/responses/400.yaml

@@ -1,0 +1,28 @@
+summary: Update user subscription
+operationId: updSubscription
+tags:
+  - Auth
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          subscription:
+            type: string
+responses:
+  '200':
+    description: User subscription updated successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+            subscription:
+              type: string
+  '401':
+    $ref: ../../components/responses/401.yaml

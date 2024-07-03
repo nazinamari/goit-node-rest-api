@@ -34,6 +34,27 @@ paths:
   /users/avatar:
     patch:
       $ref: ../swagger/paths/users/patch.yaml
+  /users/verify:
+    post:
+      $ref: ../swagger/paths/users/post.yaml
+  /users/verify/{verificationToken}:
+    patch:
+      $ref: ../swagger/paths/users/get.yaml
+  /auth/register:
+    post:
+      $ref: ../swagger/paths/auth/register.yaml
+  /auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login.yaml
+  /auth/logout:
+    get:
+      $ref: ../swagger/paths/auth/logout.yaml
+  /auth/current:
+    get:
+      $ref: ../swagger/paths/auth/current.yaml
+  /auth:
+    patch:
+      $ref: ../swagger/paths/auth/subscription.yaml
 components:
   securitySchemes:
     bearerAuth:

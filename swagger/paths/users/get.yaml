@@ -1,0 +1,26 @@
+summary: Verify user account
+operationId: verifyUser
+tags:
+  - Users
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: verificationToken
+    required: true
+    description: The verification token received by the user
+    schema:
+      type: string
+responses:
+  '200':
+    description: Verification successful
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: Verification successful
+  '404':
+    $ref: ../../components/responses/404.yaml
