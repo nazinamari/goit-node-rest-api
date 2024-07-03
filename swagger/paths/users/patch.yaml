@@ -1,0 +1,29 @@
+summary: Update user's avatar
+tags:
+  - Users
+parameters:
+  - in: formData
+    name: avatar
+    required: true
+    description: The avatar image file to upload
+    schema:
+      type: string
+      format: binary
+responses:
+  '200':
+    description: Successfully updated user's avatar
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            avatarURL:
+              type: string
+              format: uri
+              example: /avatars/avatar123.jpg
+  '400':
+    $ref: ../../components/responses/400.yaml
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '404':
+    $ref: ../../components/responses/404.yaml

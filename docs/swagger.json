@@ -140,6 +140,88 @@
             "$ref": "#/components/responses/404"
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Contacts"
+        ],
+        "summary": "Update a contact",
+        "operationId": "updateContact",
+        "description": "Update a contact by its ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the contact to update"
+          }
+        ],
+        "requestBody": {
+          "description": "Contact object that needs to be updated",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "phone"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the contact",
+                    "example": "John Doe"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Email of the contact",
+                    "example": "john.doe@example.com"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "description": "Phone number of the contact",
+                    "example": "+1234567890"
+                  },
+                  "favorite": {
+                    "type": "boolean",
+                    "description": "Whether the contact is marked as favorite",
+                    "example": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated contact",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/contact"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
       }
     },
     "/contacts/{id}/favorite": {
@@ -356,6 +438,54 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/users/avatar": {
+      "patch": {
+        "summary": "Update user's avatar",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "avatar",
+            "required": true,
+            "description": "The avatar image file to upload",
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated user's avatar",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "avatarURL": {
+                      "type": "string",
+                      "format": "uri",
+                      "example": "/avatars/avatar123.jpg"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
           }
         }
       }

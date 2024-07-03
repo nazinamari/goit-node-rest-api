@@ -21,14 +21,19 @@ paths:
       $ref: ../swagger/paths/contacts/{id}/get.yaml
     delete:
       $ref: ../swagger/paths/contacts/{id}/delete.yaml
+    put:
+      $ref: ../swagger/paths/contacts/{id}/put.yaml
   /contacts/{id}/favorite:
     patch:
-      $ref: ../swagger/paths/contacts/{id}/favorite/patch.yaml
+      $ref: ../swagger/paths/contacts/{id}/patch.yaml
   /contacts:
     get:
       $ref: ../swagger/paths/contacts/get.yaml
     post:
       $ref: ../swagger/paths/contacts/post.yaml
+  /users/avatar:
+    patch:
+      $ref: ../swagger/paths/users/patch.yaml
 components:
   securitySchemes:
     bearerAuth:
